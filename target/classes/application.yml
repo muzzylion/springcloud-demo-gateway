@@ -1,0 +1,19 @@
+server:
+  port: 9898
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true  #从注册中心发现
+      routes:
+       - id: mygateway
+         uri: lb://DEMO-CONSUMER  #服务端 service_id
+         predicates:
+          - Path=/consumer/**    #路由映射路径 这里注意，这个路径会追加到 service_id后
+  application:
+    name: demo-gateway
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
